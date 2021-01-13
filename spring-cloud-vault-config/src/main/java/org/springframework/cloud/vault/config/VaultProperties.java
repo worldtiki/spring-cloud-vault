@@ -101,6 +101,16 @@ public class VaultProperties implements EnvironmentAware {
 	private boolean failFast = false;
 
 	/**
+	 * Number of retries for failed requests to Vault.
+	 */
+	private int retriesMaxAttempts = 0;
+
+	/**
+	 * Perform each retry after fixed amount of time, in milliseconds.
+	 */
+	private long retriesBackoff = 1000L;
+
+	/**
 	 * Static vault token. Required if {@link #authentication} is {@code TOKEN}.
 	 */
 	@Nullable
@@ -227,6 +237,22 @@ public class VaultProperties implements EnvironmentAware {
 
 	public void setFailFast(boolean failFast) {
 		this.failFast = failFast;
+	}
+
+	public int getRetriesMaxAttempts() {
+		return retriesMaxAttempts;
+	}
+
+	public void setRetriesMaxAttempts(int retriesMaxAttempts) {
+		this.retriesMaxAttempts = retriesMaxAttempts;
+	}
+
+	public long getRetriesBackoff() {
+		return retriesBackoff;
+	}
+
+	public void setRetriesBackoff(long retriesBackoff) {
+		this.retriesBackoff = retriesBackoff;
 	}
 
 	@Nullable
