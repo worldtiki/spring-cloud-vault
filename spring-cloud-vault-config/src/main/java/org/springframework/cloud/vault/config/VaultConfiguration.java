@@ -97,31 +97,7 @@ final class VaultConfiguration {
 		return new SslConfiguration(keyStore, trustStore);
 	}
 
-	static ThreadPoolTaskScheduler createScheduler() {
-		ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-		threadPoolTaskScheduler.setPoolSize(2);
-		threadPoolTaskScheduler.setDaemon(true);
-		threadPoolTaskScheduler.setThreadNamePrefix("Spring-Cloud-Vault-");
-		return threadPoolTaskScheduler;
-	}
 
-	static void customizeContainer(VaultProperties.ConfigLifecycle lifecycle, SecretLeaseContainer container) {
-
-		if (lifecycle.isEnabled()) {
-
-			if (lifecycle.getMinRenewal() != null) {
-				container.setMinRenewal(lifecycle.getMinRenewal());
-			}
-
-			if (lifecycle.getExpiryThreshold() != null) {
-				container.setExpiryThreshold(lifecycle.getExpiryThreshold());
-			}
-
-			if (lifecycle.getLeaseEndpoints() != null) {
-				container.setLeaseEndpoints(lifecycle.getLeaseEndpoints());
-			}
-		}
-	}
 
 	static ClientHttpRequestFactory wrapHttpRequestFactoryWithRetryOperations(ClientHttpRequestFactory delegate,
 																			  RetryOperations retryOperations) throws GeneralSecurityException, IOException {
@@ -262,4 +238,29 @@ final class VaultConfiguration {
 		return container;
 	}
 
+	static ThreadPoolTaskScheduler createScheduler() {
+		ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+		threadPoolTaskScheduler.setPoolSize(2);
+		threadPoolTaskScheduler.setDaemon(true);
+		threadPoolTaskScheduler.setThreadNamePrefix("Spring-Cloud-Vault-");
+		return threadPoolTaskScheduler;
+	}
+
+	static void customizeContainer(VaultProperties.ConfigLifecycle lifecycle, SecretLeaseContainer container) {
+
+		if (lifecycle.isEnabled()) {
+
+			if (lifecycle.getMinRenewal() != null) {
+				container.setMinRenewal(lifecycle.getMinRenewal());
+			}
+
+			if (lifecycle.getExpiryThreshold() != null) {
+				container.setExpiryThreshold(lifecycle.getExpiryThreshold());
+			}
+
+			if (lifecycle.getLeaseEndpoints() != null) {
+				container.setLeaseEndpoints(lifecycle.getLeaseEndpoints());
+			}
+		}
+	}
 }
